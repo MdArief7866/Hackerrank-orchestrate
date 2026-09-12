@@ -1,0 +1,19 @@
+message_id,request_id,user_id,message_date,sender,message_type,content,related_event_id,image_id
+MSG001,REQ001,U001,2025-01-04,user,text,"I need to buy a laptop charger from Amazon for $500",,
+MSG002,REQ001,U001,2025-01-05,support,text,"Your request has been reviewed. Please proceed with payment.",,
+MSG003,REQ002,U001,2025-01-09,user,text,"I want to purchase a new MacBook from Apple Store for $1200",,
+MSG004,REQ003,U002,2025-01-07,user,text,"Need to buy furniture from IKEA for 300 EUR",,
+MSG005,REQ004,U002,2025-01-14,user,text,"Planning a vacation booking with travel agency for 2500 EUR",,
+MSG006,REQ005,U003,2025-01-02,user,text,"Netflix subscription renewal for 150 GBP",,
+MSG007,REQ006,U003,2025-01-11,user,text,"Dental treatment payment needed for 800 GBP",,
+MSG008,REQ007,U001,2025-01-19,user,text,"Need electronics from Best Buy for $450",,
+MSG009,REQ008,U004,2025-01-05,user,text,"Car repair invoice for $2000",,
+MSG010,REQ009,U004,2025-01-17,user,text,"Grocery shopping for $75",,
+MSG011,REQ010,U002,2025-01-21,user,text,"Gym membership annual payment 600 EUR",,
+MSG012,REQ011,U003,2025-01-24,user,text,"Need a new laptop for 1000 GBP",,
+MSG013,REQ012,U004,2025-01-31,user,text,"Amazon order for $350",,
+MSG014,REQ013,U001,2025-02-02,user,text,"University tuition payment of $2000",,
+MSG015,REQ014,U002,2025-02-09,user,text,"Restaurant bill 400 EUR",,
+MSG016,REQ015,U003,2025-02-13,user,text,"Books from bookstore 120 GBP",,
+MSG017,REQ004,U002,2025-01-28,support,text,"Please note the corrected amount for the dental bill in the attached image.",EVT054,IMG001
+MSG018,REQ006,U003,2025-01-12,support,text,"The dental treatment estimate has been updated. See attached image.",,IMG002

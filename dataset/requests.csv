@@ -1,0 +1,16 @@
+request_id,user_id,request_date,requested_amount,currency,merchant,category,desired_completion_date,minimum_balance_to_keep,payment_methods_user_will_consider,allows_partial_payment
+REQ001,U001,2025-01-05,500.00,USD,Amazon,shopping,2025-01-20,200.00,"full_payment,partial_payment,installments",true
+REQ002,U001,2025-01-10,1200.00,USD,Apple Store,electronics,2025-02-10,200.00,"full_payment,installments",false
+REQ003,U002,2025-01-08,300.00,EUR,IKEA,home,2025-01-25,100.00,"full_payment,partial_payment",true
+REQ004,U002,2025-01-15,2500.00,EUR,Travel Agency,travel,2025-03-01,100.00,"full_payment,installments,wait",false
+REQ005,U003,2025-01-03,150.00,GBP,Netflix,subscription,2025-01-10,50.00,"full_payment",false
+REQ006,U003,2025-01-12,800.00,GBP,Dentist,medical,2025-02-15,50.00,"full_payment,partial_payment,installments",true
+REQ007,U001,2025-01-20,450.00,USD,Best Buy,electronics,2025-02-05,200.00,"full_payment,partial_payment",true
+REQ008,U004,2025-01-06,2000.00,USD,Car Repair,auto,2025-03-15,500.00,"full_payment,installments",false
+REQ009,U004,2025-01-18,75.00,USD,Grocery Store,groceries,2025-01-25,500.00,"full_payment",true
+REQ010,U002,2025-01-22,600.00,EUR,Gym Membership,health,2025-02-22,100.00,"full_payment,partial_payment",true
+REQ011,U003,2025-01-25,1000.00,GBP,Laptop,electronics,2025-03-25,50.00,"full_payment,installments,wait",false
+REQ012,U004,2025-02-01,350.00,USD,Amazon,shopping,2025-02-15,500.00,"full_payment,partial_payment",true
+REQ013,U001,2025-02-03,2000.00,USD,University,tuition,2025-04-15,200.00,"full_payment,installments",false
+REQ014,U002,2025-02-10,400.00,EUR,Restaurant,dining,2025-02-24,100.00,"full_payment,partial_payment",true
+REQ015,U003,2025-02-14,120.00,GBP,Bookstore,shopping,2025-02-21,50.00,"full_payment",false

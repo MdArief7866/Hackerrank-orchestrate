@@ -1,0 +1,5 @@
+user_id,base_currency,monthly_income,monthly_expenses,current_balance,account_type
+U001,USD,4500.00,2800.00,3200.00,checking
+U002,EUR,3200.00,1900.00,850.00,savings
+U003,GBP,2800.00,1500.00,600.00,checking
+U004,USD,5200.00,3100.00,5800.00,checking

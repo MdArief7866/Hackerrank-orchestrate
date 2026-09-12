@@ -1,0 +1,3 @@
+image_id,request_id,event_id,user_id,image_date,image_type,extracted_amount,extracted_currency,description,ocr_confidence,source
+IMG001,REQ004,EVT054,U002,2025-01-28,invoice,250.00,EUR,Dental clinic invoice showing corrected amount of 250 EUR,0.95,upload
+IMG002,REQ006,EVT055,U003,2025-01-12,invoice,800.00,GBP,Dental treatment estimate showing 800 GBP,0.92,upload

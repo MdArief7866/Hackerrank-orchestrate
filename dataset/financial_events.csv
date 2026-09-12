@@ -1,0 +1,61 @@
+event_id,user_id,event_type,event_date,amount,currency,description,is_recurring,recurring_frequency,linked_event_id,image_id,source,status
+EVT001,U001,income,2025-01-01,4500.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT002,U001,expense,2025-01-01,2800.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT003,U001,income,2025-01-15,500.00,USD,Freelance payment,false,,,,side_hustle,confirmed
+EVT004,U001,expense,2025-01-10,120.00,USD,Phone bill,true,monthly,,,verizon,confirmed
+EVT005,U001,expense,2025-01-05,60.00,USD,Streaming services,true,monthly,,,netflix,confirmed
+EVT006,U001,income,2025-02-01,4500.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT007,U001,expense,2025-02-01,2800.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT008,U001,expense,2025-02-10,120.00,USD,Phone bill,true,monthly,,,verizon,confirmed
+EVT009,U001,expense,2025-02-05,60.00,USD,Streaming services,true,monthly,,,netflix,confirmed
+EVT010,U001,income,2025-03-01,4500.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT011,U001,expense,2025-03-01,2800.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT012,U001,expense,2025-03-10,120.00,USD,Phone bill,true,monthly,,,verizon,confirmed
+EVT013,U001,expense,2025-03-05,60.00,USD,Streaming services,true,monthly,,,netflix,confirmed
+EVT014,U001,expense,2025-01-20,200.00,USD,Gym membership,true,monthly,,,gym,confirmed
+EVT015,U001,expense,2025-02-20,200.00,USD,Gym membership,true,monthly,,,gym,confirmed
+EVT016,U001,expense,2025-03-20,200.00,USD,Gym membership,true,monthly,,,gym,confirmed
+EVT017,U002,income,2025-01-01,3200.00,EUR,Monthly salary,true,monthly,,,employer,confirmed
+EVT018,U002,expense,2025-01-01,1900.00,EUR,Monthly expenses,true,monthly,,,budget,confirmed
+EVT019,U002,expense,2025-01-08,80.00,EUR,Internet,true,monthly,,,telecom,confirmed
+EVT020,U002,income,2025-02-01,3200.00,EUR,Monthly salary,true,monthly,,,employer,confirmed
+EVT021,U002,expense,2025-02-01,1900.00,EUR,Monthly expenses,true,monthly,,,budget,confirmed
+EVT022,U002,expense,2025-02-08,80.00,EUR,Internet,true,monthly,,,telecom,confirmed
+EVT023,U002,income,2025-03-01,3200.00,EUR,Monthly salary,true,monthly,,,employer,confirmed
+EVT024,U002,expense,2025-03-01,1900.00,EUR,Monthly expenses,true,monthly,,,budget,confirmed
+EVT025,U002,expense,2025-03-08,80.00,EUR,Internet,true,monthly,,,telecom,confirmed
+EVT026,U002,expense,2025-01-15,150.00,EUR,Gym membership,true,monthly,,,gym,confirmed
+EVT027,U002,expense,2025-02-15,150.00,EUR,Gym membership,true,monthly,,,gym,confirmed
+EVT028,U002,expense,2025-03-15,150.00,EUR,Gym membership,true,monthly,,,gym,confirmed
+EVT029,U003,income,2025-01-01,2800.00,GBP,Monthly salary,true,monthly,,,employer,confirmed
+EVT030,U003,expense,2025-01-01,1500.00,GBP,Monthly expenses,true,monthly,,,budget,confirmed
+EVT031,U003,expense,2025-01-12,45.00,GBP,Mobile phone,true,monthly,,,o2,confirmed
+EVT032,U003,income,2025-02-01,2800.00,GBP,Monthly salary,true,monthly,,,employer,confirmed
+EVT033,U003,expense,2025-02-01,1500.00,GBP,Monthly expenses,true,monthly,,,budget,confirmed
+EVT034,U003,expense,2025-02-12,45.00,GBP,Mobile phone,true,monthly,,,o2,confirmed
+EVT035,U003,income,2025-03-01,2800.00,GBP,Monthly salary,true,monthly,,,employer,confirmed
+EVT036,U003,expense,2025-03-01,1500.00,GBP,Monthly expenses,true,monthly,,,budget,confirmed
+EVT037,U003,expense,2025-03-12,45.00,GBP,Mobile phone,true,monthly,,,o2,confirmed
+EVT038,U003,expense,2025-01-18,90.00,GBP,Streaming bundle,true,monthly,,,sky,confirmed
+EVT039,U003,expense,2025-02-18,90.00,GBP,Streaming bundle,true,monthly,,,sky,confirmed
+EVT040,U003,expense,2025-03-18,90.00,GBP,Streaming bundle,true,monthly,,,sky,confirmed
+EVT041,U004,income,2025-01-01,5200.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT042,U004,expense,2025-01-01,3100.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT043,U004,expense,2025-01-08,180.00,USD,Car insurance,true,monthly,,,geico,confirmed
+EVT044,U004,income,2025-02-01,5200.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT045,U004,expense,2025-02-01,3100.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT046,U004,expense,2025-02-08,180.00,USD,Car insurance,true,monthly,,,geico,confirmed
+EVT047,U004,income,2025-03-01,5200.00,USD,Monthly salary,true,monthly,,,employer,confirmed
+EVT048,U004,expense,2025-03-01,3100.00,USD,Monthly expenses,true,monthly,,,budget,confirmed
+EVT049,U004,expense,2025-03-08,180.00,USD,Car insurance,true,monthly,,,geico,confirmed
+EVT050,U004,expense,2025-01-20,300.00,USD,Dining out,true,monthly,,,restaurants,confirmed
+EVT051,U004,expense,2025-02-20,300.00,USD,Dining out,true,monthly,,,restaurants,confirmed
+EVT052,U004,expense,2025-03-20,300.00,USD,Dining out,true,monthly,,,restaurants,confirmed
+EVT053,U001,income,2025-02-14,300.00,USD,Tax refund,false,,,,irs,confirmed
+EVT054,U002,expense,2025-01-28,,,EUR,Dental bill,false,,EVT055,IMG001,dental_clinic,pending
+EVT055,U002,expense,2025-01-28,250.00,EUR,Dental bill corrected amount,false,,,,dental_clinic,confirmed
+EVT056,U003,income,2025-02-20,200.00,GBP,Cash gift,false,,,,family,confirmed
+EVT057,U004,expense,2025-01-25,400.00,USD,Home repair,false,,,,handyman,confirmed
+EVT058,U001,expense,2025-01-18,100.00,USD,Coffee budget,true,monthly,,,starbucks,confirmed
+EVT059,U001,expense,2025-02-18,100.00,USD,Coffee budget,true,monthly,,,starbucks,confirmed
+EVT060,U001,expense,2025-03-18,100.00,USD,Coffee budget,true,monthly,,,starbucks,confirmed
