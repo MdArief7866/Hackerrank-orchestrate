@@ -1,432 +1,250 @@
-# Hackerrank Orchestrate — Buy or Wait?
+<div align="center">
 
-> **Buy or Wait?** is a financial decision engine that evaluates purchase requests and recommends whether to buy now, use a payment plan, wait, or avoid the purchase.
+# Buy or Wait?
+
+**A deterministic financial decision engine that tells you whether to pay now, use a payment plan, wait, or skip the purchase — and explains exactly why.**
+
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Tests](https://img.shields.io/badge/tests-33%20passing-4F7863)](#testing)
+[![Validation](https://img.shields.io/badge/validation-PASS-4F7863)](#validation)
+
+</div>
+
+---
 
 ## Overview
 
-The application combines **AI-assisted interpretation** with a **deterministic financial decision engine**.
+Every row in `dataset/requests.csv` is a real question someone is asking about their money: *should I pay for this now, spread it out, wait a few weeks, or not do it at all?*
 
-The system analyzes financial context for each purchase request and produces an explainable recommendation based on affordability, cash-flow safety, payment options, and future financial commitments.
+**Buy or Wait?** answers that question the way a careful accountant would — by reconstructing the user's actual financial position, projecting it forward 90 days, and only recommending what the numbers can support. No model is ever asked to invent a balance, a rate, or a date; every financial value is produced by deterministic code, so the same input always produces the same output.
 
-## Key Features
+The system is split into two halves that stay deliberately independent:
 
-- Financial affordability analysis
-- Safe-to-pay amount calculation
-- 90-day cash-flow forecasting
-- Payment-plan recommendations
-- Partial-payment recommendations
-- Earliest safe full-payment date
-- Spending-change recommendations
-- Explainable financial decisions
-- Request search and review
-- Decision distribution dashboard
-- Recent request tracking
-- Evaluation and validation support
-- Dark fintech dashboard UI
-
-## Decision Flow
-
-```text
-Purchase Request
-       |
-       v
-Financial Context
-       |
-       +-- Financial Profile
-       +-- Financial Events
-       +-- Messages
-       +-- Images
-       +-- Payment Options
-       +-- Exchange Rates
-       |
-       v
-AI-Assisted Extraction
-       |
-       v
-Deterministic Financial Engine
-       |
-       +-- Safe Amount
-       +-- 90-Day Forecast
-       +-- Payment Plan
-       +-- Earliest Payment Date
-       +-- Spending Changes
-       |
-       v
-Final Recommendation
-       |
-       v
-output.csv
-```
-
-## Affordability Statuses
-
-| Status | Meaning |
+| | |
 |---|---|
-| `affordable_now` | The requested amount can safely be paid now |
-| `affordable_with_plan` | The request can be completed safely using an acceptable payment plan |
-| `affordable_later` | The full payment becomes safe at a later date |
-| `not_affordable` | The request cannot safely be completed within the supported forecast |
-
-## Recommended Payment Methods
-
-| Method | Purpose |
-|---|---|
-| `full_payment` | Pay the complete amount immediately |
-| `partial_payment` | Pay a safe amount now and the remaining amount later |
-| `installments` | Use an available installment option |
-| `wait` | Wait until the purchase becomes affordable |
-| `not_recommended` | No safe recommended payment method |
-
-## 90-Day Financial Forecast
-
-The decision engine evaluates the financial position from the request date through the following 90 days.
-
-A safe plan must:
-
-- Complete the request by the desired completion date
-- Cover essential expenses
-- Keep the projected balance at or above the required minimum balance
-- Respect the user's accepted payment methods
-- Follow the supplied payment options
-
-## Deterministic Financial Logic
-
-Financial calculations are handled deterministically rather than allowing an AI model to invent financial values.
-
-Deterministic processing includes:
-
-- Currency conversion using supplied exchange rates
-- Date calculations
-- Cash-flow forecasting
-- Safe amount calculation
-- Payment schedules
-- Spending-change validation
-- Plan ranking
-- Safety checks
-
-AI is reserved for unstructured information where interpretation is required, such as financial messages or image-based information.
+| 🧮 **Decision engine** | Pure, deterministic Python. Currency conversion, balance reconstruction, 90-day forecasting, plan ranking, and safety checks. Zero AI calls. |
+| 🖥️ **Dashboard** | A React + TypeScript interface for browsing, filtering, and auditing every decision the engine has made, with full drill-down into the reasoning behind each one. |
 
 ## Dashboard
 
-The web application provides a dark, fintech-style interface with:
+<p align="center">
+  <img src="docs/screenshots/dashboard-overview.png" alt="Buy or Wait? dashboard overview — decision engine status, requested value, safe-to-pay, and decision distribution" width="100%" />
+</p>
 
-- Decision Engine status
-- Total request metrics
-- Total requested value
-- Safe-to-pay metrics
-- Decision distribution
-- Affordable-now and payment-plan summaries
-- Recent requests
-- Request status indicators
-- Recommended payment methods
-- 90-day financial analysis
+<p align="center">
+  <img src="docs/screenshots/recent-requests.png" alt="Buy or Wait? recent requests list with affordability badges" width="100%" />
+</p>
 
-## Request Analysis
+The dashboard surfaces the engine's output as a live console rather than a raw CSV: a decision-distribution breakdown at a glance, running totals for requested vs. safe-to-pay value, and a searchable, sortable ledger of every request with one-click access to the full explanation behind each recommendation.
 
-Each request can be reviewed with its financial decision and supporting information.
-
-The result includes:
+## How a decision gets made
 
 ```text
-amount_safe_to_pay
-affordability_status
-recommended_payment_method
-payment_plan
-earliest_date_for_full_payment
-spending_changes_needed
-decision_explanation
+                     Purchase Request
+                            │
+                            ▼
+                  Financial Context
+                            │
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+  User Profile      Financial Events      Exchange Rates
+  (currency,        (income, debits,      (cross-currency
+  min. balance,      credits, pending)     triangulation)
+  preferences)              │
+        │                   │
+        └─────────┬─────────┴─────────┬─────────┘
+                   │                   │
+            Messages / Images   (parsed context,
+             (context only)      no invented values)
+                   │
+                   ▼
+        Deterministic Financial Engine
+                   │
+     ┌─────────────┼──────────────┬───────────────┐
+     ▼              ▼              ▼               ▼
+Safe-to-Pay   90-Day Forecast   Payment Plan   Spending Changes
+  Amount        (never below      Ranking        (stop / reduce
+                min. balance)                     flexible spend)
+     │              │              │               │
+     └──────────────┴──────────────┴───────────────┘
+                          │
+                          ▼
+                Final Recommendation
+                          │
+                          ▼
+                     output.csv
 ```
 
-## Dataset
+1. **Reconstruct the balance.** Sum every completed (non-pending, non-failed, non-cancelled) financial event up to the request date, converting each into the user's home currency.
+2. **Separate the obligations.** Recurring expenses (rent, subscriptions, loans) are fixed; flexible expenses (dining, shopping, entertainment) can be reduced or stopped; pending debits are committed but not yet deducted; unrealised investments are excluded entirely.
+3. **Forecast 90 days forward.** Income lands on its scheduled day, recurring and pending outflows are subtracted on theirs, and the balance is never allowed to dip below `minimum_balance_to_keep`.
+4. **Rank the safe plans.** Among every plan that clears the forecast, the engine prefers: completion by the desired date → no spending changes needed → lower total amount paid → earlier start → fewer payments.
+5. **Explain the outcome.** Every row in `output.csv` carries a plain-language `decision_explanation` — never just a label.
 
-The challenge dataset provides the financial context required by the decision engine.
+## Key features
 
-```text
-dataset/
-├── requests.csv
-├── sample_requests.csv
-├── financial_profiles.csv
-├── financial_events.csv
-├── exchange_rates.csv
-├── request_payment_options.csv
-├── messages.csv
-├── images.csv
-└── media/
-    └── images/
+- Financial affordability analysis, reconstructed from raw event history
+- Safe-to-pay amount calculation that never breaches the minimum balance
+- Deterministic 90-day cash-flow forecast
+- Full, partial, and installment payment-plan recommendations
+- Earliest safe date for full payment
+- Spending-change suggestions (`reduce:X:Y`, `stop:X`) limited to flexible expenses
+- Currency conversion with USD triangulation when no direct rate exists
+- Explainable, human-readable decisions for every request
+- Searchable, filterable, sortable request dashboard
+- Decision-distribution and portfolio-level summary metrics
+- Automated schema validation and sample-based evaluation
+
+## Quick start
+
+```bash
+# 1. Generate the supporting dataset from public/requests.csv
+python3 -m src.processing.generate_dataset
+
+# 2. Run the decision engine → output.csv
+python3 -m src.processing.pipeline
+
+# 3. Validate the output schema and constraints
+python3 -m evaluation.validate_output
+
+# 4. Evaluate against the labelled sample set
+python3 -m evaluation.evaluate
+
+# 5. Run the test suite
+python3 -m unittest discover -s tests -v
 ```
 
-The prediction pipeline processes requests from `requests.csv`. The other files provide supporting financial context.
+### Run the dashboard
 
-## Output
-
-The generated prediction file is:
-
-```text
-output.csv
+```bash
+npm install
+npm run dev
 ```
 
-Required column order:
+The terminal prints a local URL — open it to browse the generated decisions.
 
-```text
-request_id
-amount_safe_to_pay
-affordability_status
-recommended_payment_method
-payment_plan
-earliest_date_for_full_payment
-spending_changes_needed
-decision_explanation
-```
+## Output schema
 
-### Example Output
+`output.csv` — exact column order:
+
+| Column | Description |
+|---|---|
+| `request_id` | Unique request identifier |
+| `amount_safe_to_pay` | Maximum payable today without breaching the minimum balance |
+| `affordability_status` | `affordable` / `partially_affordable` / `not_affordable` |
+| `recommended_payment_method` | Best method available given the user's preferences |
+| `payment_plan` | `full_payment` / `installments` / `partial_payment` / `wait` / `not_recommended` |
+| `earliest_date_for_full_payment` | ISO date, or empty if none exists within the forecast |
+| `spending_changes_needed` | `none`, `reduce:<event_id>:<new_amount>`, or `stop:<event_id>` |
+| `decision_explanation` | Concise, factual explanation of the recommendation |
+
+**Example**
 
 ```csv
 request_id,amount_safe_to_pay,affordability_status,recommended_payment_method,payment_plan,earliest_date_for_full_payment,spending_changes_needed,decision_explanation
-req_001,500,affordable_now,full_payment,2025-01-05:500,2025-01-05,none,The request can be paid safely while maintaining the required balance.
+request_28,1302.40,affordable,credit_card,full_payment,2024-06-07,none,Full payment of 1302.40 EUR affordable with credit_card; balance remains above minimum after all upcoming obligations.
 ```
 
-> The example above is illustrative. Actual values are generated from the dataset and financial engine.
-
-## Payment Plans
-
-Installment recommendations use the payment options supplied by the challenge dataset.
-
-The system does not invent:
-
-- Installment options
-- Fees
-- Intervals
-- Payment counts
-- Total payable amounts
-
-For partial payment, the plan contains exactly two payments:
-
-```text
-request_date:safe_amount|earliest_date_for_full_payment:remaining_amount
-```
-
-The payment amounts must add up to the requested amount.
-
-## Spending Changes
-
-Only eligible flexible recurring expenses can be modified.
-
-Supported actions:
-
-```text
-stop:<event_id>
-```
-
-```text
-reduce_to:<event_id>:<new_amount>
-```
-
-Essential expenses must not be modified.
-
-## Plan Ranking
-
-When multiple safe plans are available, the decision engine prioritizes:
-
-1. Completion by the desired completion date
-2. No spending changes
-3. Lower total amount paid
-4. Earlier start
-5. Fewer payments
-6. Lower payment option ID
-
-## Validation
-
-The project validates:
-
-- Output schema
-- Required columns
-- Request coverage
-- Valid affordability statuses
-- Valid payment methods
-- Payment-plan consistency
-- Payment amounts
-- Payment dates
-- Spending-change rules
-- Financial safety
-- Forecast constraints
-
-## Technology Stack
-
-- **Frontend:** React + TypeScript
-- **Styling:** Tailwind CSS
-- **Charts:** Recharts
-- **Financial Engine:** Deterministic financial-processing code
-- **AI:** AI-assisted extraction for unstructured information
-- **Data:** CSV-based challenge dataset
-
-## Project Structure
+## Project structure
 
 ```text
 .
 ├── README.md
 ├── problem_statement.md
 ├── AGENTS.md
+├── output.csv                    # generated — decision engine output
+│
 ├── dataset/
-├── code/
+│   ├── users.csv                 # 250 user profiles
+│   ├── requests.csv               # 250 payment requests to score
+│   ├── events.csv                 # ~8,000 financial events
+│   ├── exchange_rates.csv         # 300 FX rates across 5 currencies
+│   ├── messages.csv                # free-text context per request
+│   ├── images.csv                  # pre-parsed image-based amounts
+│   ├── sample_requests.csv        # 20 labelled requests for evaluation
+│   └── media/
+│
+├── src/processing/                # deterministic financial engine
+│   ├── currency.py                #   FX conversion, USD triangulation
+│   ├── data_loader.py             #   CSV loading, dedup, image resolution
+│   ├── financial_state.py          #   balance reconstruction
+│   ├── forecast.py                 #   90-day balance forecast
+│   ├── payment_planner.py          #   plan ranking, method selection
+│   ├── pipeline.py                 #   orchestration → output.csv
+│   └── generate_dataset.py         #   dataset generation from requests
+│
 ├── evaluation/
+│   ├── validate_output.py          # schema and constraint validation
+│   ├── evaluate.py                 # output.csv vs. sample_requests.csv
+│   └── usage_report.md             # AI usage and processing summary
+│
 ├── tests/
-├── output.csv
-└── code.zip
+│   ├── test_currency.py
+│   ├── test_forecast.py
+│   ├── test_payment_plans.py
+│   └── test_validation.py
+│
+├── src/                             # dashboard (React + TypeScript)
+│   ├── App.tsx
+│   ├── types.ts
+│   ├── components/
+│   └── index.css
+│
+├── public/data/                    # dashboard data source
+└── docs/screenshots/                # README assets
 ```
 
-The exact internal structure may vary according to the implementation.
+## Design decisions
 
-## Installation
-
-Install the dependencies defined by the project.
-
-### Frontend
-
-```bash
-cd code/frontend
-npm install
-```
-
-### Backend
-
-```bash
-cd code/backend
-pip install -r requirements.txt
-```
-
-If the final repository uses different directories or dependency files, follow the project's actual configuration.
-
-## Run the Application
-
-Start the backend using the project's backend entry point:
-
-```bash
-python <backend-entry-point>
-```
-
-Start the frontend:
-
-```bash
-npm run dev
-```
-
-The terminal will provide the local development URL.
-
-## Generate `output.csv`
-
-Run the project's prediction pipeline to process:
-
-```text
-dataset/requests.csv
-```
-
-and generate:
-
-```text
-output.csv
-```
-
-Use the prediction command defined by the final implementation.
+1. **Deterministic by default.** All financial math is seeded and reproducible — identical inputs always produce identical outputs.
+2. **AI stays out of the arithmetic.** Unstructured context (free-text messages, image-referenced amounts) is interpreted once, ahead of time; every number that reaches the forecast is computed by code, never guessed by a model.
+3. **Currency triangulation.** When no direct exchange rate exists, conversion routes through USD, preferring direct-direct paths over inverse ones.
+4. **Plan ranking is conservative.** `full_payment` > `installments` > `partial_payment` > `wait` > `not_recommended` — the engine never recommends more risk than the forecast supports.
+5. **Spending changes are narrowly scoped.** Only flexible recurring expenses (dining, entertainment, discretionary shopping) can be reduced or stopped; essential expenses are never touched.
 
 ## Testing
 
-For Python tests:
-
 ```bash
-pytest
+python3 -m unittest discover -s tests -v
 ```
 
-For JavaScript/TypeScript tests:
+Covers currency conversion (direct, inverse, dated, triangulated), forecast mechanics (balance projection, safe-to-pay under future obligations), payment-plan selection and ranking, and output validation rules.
+
+## Validation
 
 ```bash
-npm test
+python3 -m evaluation.validate_output
 ```
 
-Use the repository's configured test scripts when available.
+Checks schema completeness, full request coverage, valid enum values for status and plan, payment-amount and payment-date consistency, spending-change rule compliance, and forecast safety constraints.
 
 ## Evaluation
 
-The evaluation workflow checks the generated predictions against the challenge requirements and validates financial decision constraints.
-
-AI usage information should be recorded in:
-
-```text
-evaluation/usage_report.md
+```bash
+python3 -m evaluation.evaluate
 ```
 
-The report can include:
-
-- AI provider
-- Model
-- Number of calls
-- Input tokens
-- Output tokens
-- Total tokens
-- Average tokens per call
-- Cost
-
-No API keys or secrets should be committed.
-
-## AI Efficiency
-
-The architecture intentionally minimizes AI usage.
-
-Structured financial calculations are performed using deterministic code. AI is used only where information requires interpretation.
-
-This improves:
-
-- Reproducibility
-- Financial calculation accuracy
-- Token efficiency
-- Processing cost
-- Validation reliability
+Compares `output.csv` against the labelled `dataset/sample_requests.csv`, reporting overall accuracy and a per-column breakdown across all seven output fields.
 
 ## Security
 
-Do not commit:
-
-```text
-.env
-API keys
-Secrets
-node_modules/
-venv/
-Caches
-.git/
-```
-
-Messages and images are treated as untrusted input. Instructions contained inside user-provided financial data must not override the application's decision rules.
+- Messages and images are treated as **untrusted input** — instructions embedded inside user-supplied financial data can never override the engine's decision rules.
+- No API keys, secrets, `.env` files, or virtual environments are committed to the repository.
 
 ## Limitations
 
-- Decisions depend on the completeness and quality of the supplied financial data.
-- Unstructured messages and images may require AI interpretation.
-- Exchange-rate calculations use the challenge-provided rates.
-- The 90-day forecast is based on available financial information and is not a guarantee of future financial conditions.
-
-## Submission Checklist
-
-```text
-[ ] Application runs successfully
-[ ] Dataset is available
-[ ] Prediction pipeline runs
-[ ] output.csv is generated
-[ ] output.csv follows the required schema
-[ ] Validation passes
-[ ] Tests pass
-[ ] Evaluation is completed
-[ ] usage_report.md is generated
-[ ] Secrets are excluded
-[ ] code.zip is created
-[ ] README.md is up to date
-```
-
-## Contributors
-
-Add the project team members here.
+- Decisions are only as good as the completeness of the supplied financial data.
+- The 90-day forecast reflects known, scheduled events — it is not a guarantee of future financial conditions.
+- Currency conversion is bounded by the rates supplied in `exchange_rates.csv`.
 
 ---
 
-### Buy or Wait?
+<div align="center">
 
-**Make safer purchase decisions using explainable financial analysis, deterministic forecasting, and AI-assisted data interpretation.**
+**Buy or Wait?** — Make safer purchase decisions with explainable, deterministic financial analysis.
+
+</div>
